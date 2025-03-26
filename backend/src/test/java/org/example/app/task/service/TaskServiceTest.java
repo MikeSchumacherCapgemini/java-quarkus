@@ -41,6 +41,7 @@ public class TaskServiceTest extends Assertions {
 
     @Test
     public void testSaveTaskListList(){
+        // expect 201 because new list gets created
         given()
                 .header("Content-type", "application/json")
                 .and()
@@ -50,6 +51,7 @@ public class TaskServiceTest extends Assertions {
                 .then()
                 .statusCode(201);
 
+        // expect 200 because the version gets updated (like linux touch)
         given()
                 .header("Content-type", "application/json")
                 .and()
@@ -58,28 +60,50 @@ public class TaskServiceTest extends Assertions {
                 .post("/task/list")
                 .then()
                 .statusCode(200);
+
+        // expect 500 because version 0 does not exist after previous call
+        given()
+                .header("Content-type", "application/json")
+                .and()
+                .body("{\"id\":1,\"version\":0,\"title\":\"Shopping Liste\"}")
+                .when()
+                .post("/task/list")
+                .then()
+                .statusCode(500);
     }
 
     @Test
     public void testSaveTaskItem(){
 
+        // expect 201 because new item is created
         given()
                 .header("Content-type", "application/json")
                 .and()
-                .body("{\"id\":11,\"version\":0,\"completed\":false,\"starred\":true,\"title\":\"Milk\"}")
+                .body("{\"id\":99,\"version\":0,\"completed\":false,\"starred\":true,\"title\":\"Milk\"}")
+                .when()
+                .post("/task/item")
+                .then()
+                .statusCode(201);
+
+        // expect 200 because the version gets updated (like linux touch)
+        given()
+                .header("Content-type", "application/json")
+                .and()
+                .body("{\"id\":11,\"version\":0,\"completed\":false,\"starred\":true,\"title\":\"Milki\"}")
                 .when()
                 .post("/task/item")
                 .then()
                 .statusCode(200);
 
+        // expect 500 because version 0 does not exist after previous call
         given()
                 .header("Content-type", "application/json")
                 .and()
-                .body("{\"id\":11,\"version\":0,\"completed\":false,\"starred\":true,\"title\":\"Milk\"}")
+                .body("{\"id\":11,\"version\":0,\"completed\":false,\"starred\":true,\"title\":\"Milki\"}")
                 .when()
                 .post("/task/item")
                 .then()
-                .statusCode(201);
+                .statusCode(200);
     }
 
 }
