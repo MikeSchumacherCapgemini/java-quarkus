@@ -14,36 +14,36 @@ import org.example.app.general.common.ApplicationEntity;
 @MappedSuperclass
 public abstract class ApplicationPersistenceEntity implements ApplicationEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hibernate_sequence")
-  @SequenceGenerator(name = "hibernate_sequence", sequenceName = "hibernate_sequence", allocationSize = 1, initialValue = 1000000)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hibernate_sequence")
+    @SequenceGenerator(name = "hibernate_sequence", sequenceName = "hibernate_sequence", allocationSize = 1, initialValue = 1000000)
+    private Long id;
 
-  @Version
-  private Integer version;
+    @Version
+    private Integer version;
 
-  @Override
-  public Long getId() {
+    @Override
+    public Long getId() {
 
-    return this.id;
-  }
+        return this.id;
+    }
 
-  @Override
-  public void setId(Long id) {
+    @Override
+    public void setId(Long id) {
 
-    this.id = id;
-  }
+        this.id = id;
+    }
 
-  @Override
-  public Integer getVersion() {
+    @Override
+    public Integer getVersion() {
 
-    return this.version;
-  }
+        return this.version;
+    }
 
-  @Override
-  public void setVersion(Integer version) {
+    @Override
+    public void setVersion(Integer version) {
 
-    this.version = version;
-  }
+        this.version = version;
+    }
 
 }
